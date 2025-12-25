@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café / Thé - The Wolf</title>
+
+    <!-- Polices -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #E9DDCF;
+            color: #3d2c1b;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+             overflow-x: hidden;
+        }
+
+        /* Logo + Paragraphe sous le logo */
+        .logo-container {
+            text-align: center;
+            padding: 10px 20px 50px; /* Espace supplémentaire pour le paragraphe */
+            background-color: #E9DDCF;
+            touch-action: manipulation;
+        }
+
+        .logo-container img {
+            width: 420px;
+            max-width: 94vw;
+            height: auto;
+            border-radius: 50%;
+            border: none;
+            box-shadow: none;
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: logoSimpleAppear 1.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        @keyframes logoSimpleAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Petit paragraphe sous le logo */
+        .logo-subtitle {
+            max-width: 900px;
+            margin: 35px auto 0;
+            padding: 0 20px;
+            font-size: 1.35rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: #5F3C13;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInSubtitle 1.5s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeInSubtitle {
+            to {
+                opacity: 0.95;
+                transform: translateY(0);
+            }
+        }
+
+        /* Titre catégorie */
+        .category-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            color: #5F3C13;
+            margin: 40px 0 80px;
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 200px;
+            height: 6px;
+            background: linear-gradient(to right, transparent, #5F3C13, transparent);
+            margin: 30px auto 0;
+            border-radius: 3px;
+        }
+
+        /* Image hero */
+        .hero-image-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 90px;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            border: 6px solid #5F3C13;
+            transition: all 0.5s ease;
+        }
+
+        .hero-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 28px;
+            background: linear-gradient(to bottom, rgba(95, 60, 19, 0.05) 0%, rgba(95, 60, 19, 0.15) 100%);
+            pointer-events: none;
+            z-index: 1;
+            transition: opacity 0.4s ease;
+            opacity: 0.7;
+        }
+
+        .hero-image-container:hover::before {
+            opacity: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: transform 8s ease;
+        }
+
+        /* Menu café / thé */
+        .cafe-menu {
+            max-width: 1100px;
+            margin: 0 auto 120px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+        }
+
+        .cafe-item {
+            background: linear-gradient(145deg, #ffffff, #f0e6da);
+            border-radius: 25px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+            box-shadow: 0 8px 25px rgba(95, 60, 19, 0.1);
+        }
+
+        .cafe-item:nth-child(odd) { animation-delay: 0.2s; }
+        .cafe-item:nth-child(even) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cafe-item-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #5F3C13;
+            box-shadow: 0 8px 20px rgba(95, 60, 19, 0.25);
+        }
+
+        .cafe-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cafe-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cafe-header i {
+            font-size: 1.8rem;
+            color: #5F3C13;
+        }
+
+        .cafe-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #3d2c1b;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cafe-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #5F3C13;
+            text-shadow: 0 2px 8px rgba(95, 60, 19, 0.2);
+        }
+
+        /* Bouton retour */
+        .back-button-container {
+            text-align: center;
+            margin: 100px 0 120px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(to right, #5F3C13, #7a5123);
+            color: white;
+            padding: 12px 60px;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 15px 35px rgba(95, 60, 19, 0.3);
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(to right, #4a2f0f, #5F3C13);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(95, 60, 19, 0.4);
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: #3d2c1b;
+            color: #fdfaf5;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .footer-text {
+            font-size: 1.4rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .footer-text span {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            display: block;
+            margin-top: 12px;
+        }
+
+        .footer-phone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+        }
+
+        .footer-phone i {
+            font-size: 2rem;
+            color: #5F3C13;
+            margin-bottom: 10px;
+        }
+
+        .footer-phone strong {
+            color: #5F3C13;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .social-links a {
+            color: #fdfaf5;
+            font-size: 2.8rem;
+            transition: all 0.4s ease;
+        }
+
+        .social-links a:hover {
+            color: #5F3C13;
+            transform: translateY(-10px) scale(1.2);
+        }
+
+        .copyright {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+  @media (max-width: 768px) {
+            .menu-title { font-size: 3.2rem; }
+            .section-tab { height: 180px; width: 92vw; border-width: 4px; }
+            .tab-content i { font-size: 2.6rem; }
+            .tab-content div { font-size: 2rem; }
+            .logo-subtitle { font-size: 1.15rem; }
+            .logo-container img { width: 75vw; max-width: 300px; }
+        }
+        @media (max-width: 480px) {
+            .menu-title { font-size: 2.8rem; }
+            .section-tab { height: 160px; }
+            .tab-content i { font-size: 2.3rem; }
+            .tab-content div { font-size: 1.8rem; }
+            .logo-subtitle { font-size: 1.05rem; }
+        }
+        @media (max-width: 360px) {
+            .menu-title { font-size: 2.4rem; }
+            .section-tab { height: 140px; }
+            .tab-content i { font-size: 2rem; }
+            .tab-content div { font-size: 1.6rem; }
+            .logo-container img { width: 70vw; max-width: 240px; }
+            .logo-subtitle { font-size: 1rem; }
+        }
+        @media (max-width: 768px) {
+    .menu-title {
+        font-size: 3rem;
+        margin-bottom: 50px;
+    }
+
+    .section-tab {
+        height: 180px;
+        width: 92vw;
+        border-width: 4px;
+    }
+
+    .tab-content i {
+        font-size: 2.6rem;
+    }
+
+    .tab-content div {
+        font-size: 2rem;
+        letter-spacing: 1.5px;
+    }
+
+    .logo-container img {
+        width: 75vw;
+        max-width: 300px;
+    }
+
+    .logo-subtitle {
+        font-size: 1.15rem;
+        padding: 0 15px;
+    }
+
+    .footer-text {
+        font-size: 1.2rem;
+    }
+
+    .footer-phone strong {
+        font-size: 1.6rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .menu-title {
+        font-size: 2.6rem;
+    }
+
+    .section-tab {
+        height: 155px;
+    }
+
+    .tab-content i {
+        font-size: 2.2rem;
+    }
+
+    .tab-content div {
+        font-size: 1.7rem;
+    }
+
+    .logo-subtitle {
+        font-size: 1.05rem;
+    }
+
+    .social-links a {
+        font-size: 2.2rem;
+    }
+}
+
+/* Very small phones (old / mini) */
+@media (max-width: 360px) {
+    .menu-title {
+        font-size: 2.3rem;
+    }
+
+    .section-tab {
+        height: 140px;
+    }
+
+    .tab-content i {
+        font-size: 2rem;
+    }
+
+    .tab-content div {
+        font-size: 1.6rem;
+    }
+
+    .logo-container img {
+        width: 70vw;
+        max-width: 240px;
+    }
+
+    .logo-subtitle {
+        font-size: 1rem;
+    }
+}
+      @media (max-width: 768px) {
+            .menu-title { font-size: 3rem; margin-bottom: 50px; }
+            .section-tab { 
+                height: 180px; 
+                margin: 25px auto; 
+                border-width: 4px; 
+                max-width: 90%; 
+            }
+            .tab-content i { font-size: 2.6rem; }
+            .tab-content div { font-size: 2rem; letter-spacing: 1.5px; }
+            .logo-container img { width: 280px; }
+            .logo-subtitle { 
+                font-size: 1.15rem; 
+                margin: 30px auto 0;
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-tab { height: 160px; }
+            .tab-content i { font-size: 2.3rem; margin-bottom: 10px; }
+            .tab-content div { font-size: 1.8rem; }
+            .logo-subtitle { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <img src="image/andalons.png" alt="The Wolf">
+
+        <!-- Petit paragraphe sous le logo -->
+        <p class="logo-subtitle">
+            Bienvenue chez Andalous, votre refuge cosy où les arômes authentiques du café et du thé se mêlent à une ambiance chaleureuse et conviviale. Détendez-vous et savourez l’instant.
+        </p>
+    </div>
+
+    <h1 class="category-title">Café / Thé</h1>
+
+    <div class="hero-image-container">
+        <img src="image/B1.jpg" alt="Café et Thé" class="hero-image">
+    </div>
+
+    <div class="cafe-menu">
+
+        <!-- Café -->
+        <div class="cafe-item">
+            <img src="image/cafe-direct.jpg" alt="Café Direct" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Direct</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/express.jpg" alt="Express" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Express</div>
+                </div>
+                <div class="cafe-price">7 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/capucin.jpg" alt="Capucin" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Capucin</div>
+                </div>
+                <div class="cafe-price">8 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/americain.jpg" alt="Café Américain" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Café Américain</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/chocolat-lait.jpg" alt="Chocolat au Lait" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Chocolat au Lait</div>
+                </div>
+                <div class="cafe-price">9 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/chocolat-chaud.jpg" alt="Chocolat Chaud" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Chocolat Chaud</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/cafe-illy.jpg" alt="Café Illy" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Illy</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/cafe-capsule.jpg" alt="Café Capsule" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-coffee"></i>
+                    <div class="cafe-name">Café Capsule</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/cafe-turc.jpg" alt="Café Turc" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Café Turc</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <!-- Thé -->
+        <h1 class="category-title">Thé</h1>
+
+        <div class="cafe-item">
+            <img src="image/the-menthe.jpg" alt="Thé Menthe" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé Menthe</div>
+                </div>
+                <div class="cafe-price">8 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/the-amandes.jpg" alt="Thé aux Amandes" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé aux Amandes</div>
+                </div>
+                <div class="cafe-price">10 DT</div>
+            </div>
+        </div>
+
+        <div class="cafe-item">
+            <img src="image/the-pignons.jpg" alt="Thé aux Pignons" class="cafe-item-img">
+            <div class="cafe-details">
+                <div class="cafe-header">
+                    <i class="fas fa-mug-hot"></i>
+                    <div class="cafe-name">Thé aux Pignons</div>
+                </div>
+                <div class="cafe-price">12 DT</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="back-button-container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            <span>Retour au Menu</span>
+        </a>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-text">
+                Merci pour votre fidélité<br>
+                <span>Une expérience unique alliant saveurs authentiques et ambiance chaleureuse</span>
+            </div>
+
+            <div class="footer-phone">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                    <strong>54 800 666</strong>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100063944715824" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/cafe__andalous/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+            <div class="copyright">
+                ©café Andalous Musée du Bardo
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
